@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woodefficent | Effizienz vom Entwurf bis zur Montage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --accent: #ffffff;
+            --card-bg: rgba(15, 15, 15, 0.95);
+            --border: rgba(255, 255, 255, 0.1);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #fff;
+            scroll-behavior: smooth;
+        }
+
+        /* Das Logo bleibt im Zentrum fixiert */
+        .hero-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            pointer-events: none; /* Klicks gehen durch auf die Blöcke */
+        }
+
+        .hero-container img {
+            max-width: 320px;
+            width: 80%;
+            transition: var(--transition);
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
+        }
+
+        /* Der neue geschärfte Slogan */
+        .main-slogan {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 80%;
+            color: #888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Content-Bereich */
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            padding: 100vh 20px 50px 20px; /* Startet nach dem ersten Fullscreen-Logo */
+        }
+
+        .block {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 50px;
+            margin-bottom: 80px;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: var(--transition);
+            backdrop-filter: blur(15px);
+        }
+
+        /* Interaktion: Wenn Block berührt wird, reagiert das Logo */
+        .block:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* JavaScript steuert das Logo-Scaling beim Hover über Blöcke */
+        .block:hover ~ .hero-container img {
+            transform: scale(1.1);
+        }
+
+        h2 { font-size: 2rem; margin-top: 0; letter-spacing: -1px; }
+        .highlight { color: #aaa; font-size: 1.1rem; margin-bottom: 30px; }
+
+        /* Kalkulator */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #0a0a0a;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        input, select {
+            background: #151515;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .total-box {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .cta-button {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .cta-button:hover { transform: scale(1.05); background: #ccc; }
+
+        /* Footer / Rechtliches */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            background: #050505;
+        }
+
+        .legal-links a {
+            color: #555;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .calc-grid { grid-template-columns: 1fr; }
+            .block { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-container" id="logoGroup">
+        <img src="logo.png" alt="Woodefficent Logo" id="guiLogo">
+        <div class="main-slogan">Schnittstellen eliminieren. Baukosten senken.</div>
+    </div>
+
+    <div class="wrapper">
+        
+        <section class="block" onmouseover="focusLogo()" onmouseout="unfocusLogo()">
+            <h2>Vermeiden Sie teure Planungsfehler</h2>
+            <p class="highlight">Wiederkehrende Kosten entstehen dort, wo Planung und Ausführung nicht dieselbe Sprache sprechen.</p>
+            <p>Woodefficent schliesst die Lücke. Wir liefern keine theoretischen Pläne, sondern ausführungsreife Datenmodelle. Das bedeutet für Sie: Weniger Anpassungen auf der Baustelle, keine Nachträge der ausführenden Unternehmen und eine signifikante Reduktion der Gesamtkosten.</p>
+        </section>
+
+        <section class="block" onmouseover="focusLogo()" onmouseout="unfocusLogo()">
+            <h2>Effizienz-Kalkulator</h2>
+            <p>Schätzen Sie das Einsparpotenzial durch optimierte Schnittstellenplanung.</p>
+            <div class="calc-grid">
+                <div>
+                    <label>Projektgrösse (m²)</label><br>
+                    <input type="number" id="sqm" placeholder="z.B. 400" oninput="calc()">
+                </div>
+                <div>
+                    <label>Komplexität</label><br>
+                    <select id="comp" onchange="calc()">
+                        <option value="10">Standard (EFH/MFH)</option>
+                        <option value="25">Hoch (Gewerbe/Spezialbau)</option>
+                    </select>
+                </div>
+                <div class="total-box">
+                    Geschätzte Kostenersparnis: <span id="res" style="color: #00ff88;">0</span> CHF
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; color: #555; margin-top: 10px;">*Basierend auf branchenüblichen Werten für eingesparte Nachträge und Montagezeit-Optimierung.</p>
+        </section>
+
+        <section class="block" style="text-align: center;" onmouseover="focusLogo()" onmouseout="unfocusLogo()">
+            <h2>Starten Sie effizient</h2>
+            <p>Bereit, die Brücke zur Ausführung zu schlagen?</p>
+            <a href="mailto:beda.weber@woodefficent.ch" class="cta-button">Jetzt Erstgespräch vereinbaren</a>
+        </section>
+
+        <footer>
+            <div class="legal-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+                <a href="agb.html">AGB</a>
+            </div>
+            <p style="color: #333; margin-top: 20px;">&copy; 2024 Woodefficent | Beda Weber</p>
+        </footer>
+    </div>
+
+    <script>
+        // Einfache Kalkulationslogik für das Marketing
+        function calc() {
+            const sqm = document.getElementById('sqm').value;
+            const comp = document.getElementById('comp').value;
+            // Marketing-Formel: Ersparnis pro m2 mal Komplexität
+            const savings = sqm * comp * 1.5; 
+            document.getElementById('res').innerText = Math.round(savings).toLocaleString();
+        }
+
+        // Logo-Interaktion
+        function focusLogo() {
+            document.getElementById('guiLogo').style.transform = "scale(1.15)";
+            document.getElementById('guiLogo').style.filter = "drop-shadow(0 0 30px rgba(255,255,255,0.2))";
+        }
+        function unfocusLogo() {
+            document.getElementById('guiLogo').style.transform = "scale(1)";
+            document.getElementById('guiLogo').style.filter = "drop-shadow(0 0 20px rgba(255,255,255,0.1))";
+        }
+    </script>
+
+</body>
+</html>
