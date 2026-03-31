@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Woodefficent | Interactive Hub</title>
+    <title>Woodefficent | Zentrale</title>
     <style>
         :root {
             --bg: #000;
             --accent: #fff;
-            --glass: rgba(255, 255, 255, 0.08);
+            --glass: rgba(20, 20, 20, 0.95);
+            --border: rgba(255, 255, 255, 0.15);
         }
 
         body, html {
@@ -16,145 +17,189 @@
             width: 100%; height: 100%;
             background: var(--bg);
             color: #fff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* Hintergrund Slogan */
-        .bg-slogan {
+        /* Hintergrund-Slogan */
+        .top-slogan {
             position: absolute;
-            top: 20px;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: #444;
-            text-transform: uppercase;
+            top: 30px;
             text-align: center;
             width: 100%;
-            z-index: 1;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: #444;
+            text-transform: uppercase;
         }
 
-        /* Logo-Zentrum */
-        .logo-wrap {
+        /* Das feste Logo in der Mitte */
+        .center-logo {
             position: relative;
-            z-index: 100;
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+            width: 220px;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.05));
         }
 
-        .logo-wrap img {
-            max-width: 280px;
-            width: 65vw;
-            filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
-        }
-
-        .logo-wrap:active { transform: scale(0.9); }
-
-        /* Infokarten */
-        .card {
+        /* Navigations-Buttons rundherum */
+        .nav-container {
             position: absolute;
-            width: 260px;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 20px;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 50;
-            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
         }
 
-        .card.active {
+        .nav-item {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:active { transform: scale(0.9); }
+
+        /* Icon-Stil (ähnlich dem Logo) */
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .nav-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+        }
+
+        /* Positionen der Satelliten-Buttons */
+        .pos-top { transform: translateY(-140px); }
+        .pos-bottom { transform: translateY(140px); }
+        .pos-left { transform: translateX(-130px); }
+        .pos-right { transform: translateX(130px); }
+
+        /* Inhalts-Overlay (erscheint in der Mitte) */
+        .overlay {
+            position: absolute;
+            width: 90%;
+            max-width: 400px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 30px;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 100;
+            text-align: center;
+        }
+
+        .overlay.active {
             opacity: 1;
             transform: scale(1);
             pointer-events: auto;
         }
 
-        /* Positionen der Karten (Desktop & Mobile optimiert) */
-        #c1 { top: -160px; left: 50%; transform: translateX(-50%) scale(0); } /* Oben */
-        #c1.active { transform: translateX(-50%) scale(1); }
-
-        #c2 { bottom: -160px; left: 50%; transform: translateX(-50%) scale(0); } /* Unten */
-        #c2.active { transform: translateX(-50%) scale(1); }
-
-        #c3 { left: -140px; top: 50%; transform: translateY(-50%) scale(0); } /* Links */
-        #c3.active { transform: translateY(-50%) scale(1); }
-
-        #c4 { right: -140px; top: 50%; transform: translateY(-50%) scale(0); } /* Rechts */
-        #c4.active { transform: translateY(-50%) scale(1); }
-
-        h3 { margin: 0 0 10px 0; font-size: 0.9rem; text-transform: uppercase; color: #aaa; letter-spacing: 1px; }
-        p { margin: 0; font-size: 0.85rem; line-height: 1.4; color: #eee; }
-
-        /* Mobile Anpassung */
-        @media (max-width: 600px) {
-            .card { width: 140px; padding: 15px; }
-            #c1 { top: -130px; }
-            #c2 { bottom: -130px; }
-            #c3 { left: -70px; top: -30px; }
-            #c4 { right: -70px; bottom: -30px; top: auto; }
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 1px solid #444;
+            background: none;
+            color: #888;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            text-transform: uppercase;
         }
 
-        /* Footer Rechtliches */
-        .legal {
-            position: absolute;
-            bottom: 15px;
-            width: 100%;
-            text-align: center;
-            font-size: 0.6rem;
-            z-index: 110;
-        }
+        h2 { font-size: 1.2rem; margin-top: 0; letter-spacing: 1px; color: var(--accent); }
+        p { font-size: 0.9rem; line-height: 1.5; color: #ccc; }
 
-        .legal a { color: #333; text-decoration: none; margin: 0 8px; }
+        @media (max-width: 400px) {
+            .pos-top { transform: translateY(-120px); }
+            .pos-bottom { transform: translateY(120px); }
+            .pos-left { transform: translateX(-110px); }
+            .pos-right { transform: translateX(110px); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="bg-slogan">Schnittstellen eliminieren. Baukosten senken.</div>
+    <div class="top-slogan">Schnittstellen eliminieren. Baukosten senken.</div>
 
-    <div class="logo-wrap" onclick="toggle()">
-        <img src="logo.png" alt="Woodefficent">
-        
-        <div id="c1" class="card">
-            <h3>Strategie</h3>
-            <p>Minimierung wiederkehrender Kosten durch nahtlose Planung.</p>
+    <img src="logo.png" alt="Woodefficent" class="center-logo">
+
+    <div class="nav-container">
+        <div class="nav-item pos-top" onclick="show('vision')">
+            <div class="icon-circle">V</div>
+            <div class="nav-label">Vision</div>
         </div>
 
-        <div id="c2" class="card">
-            <h3>Ersparnis</h3>
-            <p>Reduktion der Nachträge um bis zu 15% durch BIM-Präzision.</p>
+        <div class="nav-item pos-bottom" onclick="show('kosten')">
+            <div class="icon-circle">€</div>
+            <div class="nav-label">Ersparnis</div>
         </div>
 
-        <div id="c3" class="card">
-            <h3>Über mich</h3>
-            <p>Beda Weber. Expertise vom Entwurf bis zur Montage.</p>
+        <div class="nav-item pos-left" onclick="show('profile')">
+            <div class="icon-circle">W</div>
+            <div class="nav-label">Über mich</div>
         </div>
 
-        <div id="c4" class="card">
-            <h3>Kontakt</h3>
-            <p><a href="mailto:info@woodefficent.ch" style="color:white; text-decoration:none;">E-Mail schreiben</a></p>
+        <div class="nav-item pos-right" onclick="show('contact')">
+            <div class="icon-circle">@</div>
+            <div class="nav-label">Kontakt</div>
         </div>
     </div>
 
-    <div class="legal">
-        <a href="impressum.html">IMPRESSUM</a>
-        <a href="agb.html">AGB</a>
-        <a href="datenschutz.html">DATENSCHUTZ</a>
+    <div id="vision" class="overlay">
+        <h2>Präzision in Planung</h2>
+        <p>Wir schließen die Lücke zwischen innovativem Holzbau-Entwurf und der harten Realität auf der Baustelle. Durch baureife 3D-BIM Modelle vermeiden wir Planungskonflikte.</p>
+        <button class="close-btn" onclick="hide()">Schließen</button>
+    </div>
+
+    <div id="kosten" class="overlay">
+        <h2>Kosten-Effizienz</h2>
+        <p>Wiederkehrende Kosten durch Nachträge der Unternehmen minimieren wir radikal. Eine saubere Schnittstelle spart bis zu 15% der Montagezeit-Kosten.</p>
+        <button class="close-btn" onclick="hide()">Schließen</button>
+    </div>
+
+    <div id="profile" class="overlay">
+        <h2>Beda Weber</h2>
+        <p>Experte für Holzbauplanung mit tiefem Verständnis für die Ausführungspraxis. Ich sorge dafür, dass Planung funktioniert – technisch und wirtschaftlich.</p>
+        <button class="close-btn" onclick="hide()">Schließen</button>
+    </div>
+
+    <div id="contact" class="overlay">
+        <h2>Kontakt</h2>
+        <p>Bereit für maximale Effizienz?<br><br>
+        <a href="mailto:info@woodefficent.ch" style="color:white; font-weight:bold; text-decoration:none;">info@woodefficent.ch</a></p>
+        <button class="close-btn" onclick="hide()">Schließen</button>
     </div>
 
     <script>
-        let open = false;
-        function toggle() {
-            open = !open;
-            document.querySelectorAll('.card').forEach(c => {
-                c.classList.toggle('active', open);
-            });
-            document.querySelector('.logo-wrap img').style.filter = open 
-                ? "drop-shadow(0 0 30px rgba(255,255,255,0.3))" 
-                : "drop-shadow(0 0 20px rgba(255,255,255,0.1))";
+        function show(id) {
+            document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function hide() {
+            document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
         }
     </script>
 </body>
