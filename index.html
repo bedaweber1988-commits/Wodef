@@ -24,17 +24,32 @@
             overflow-x: hidden;
         }
 
-        /* --- FUTURISTISCHES INTRO --- */
+        /* --- FUTURISTISCHES INTRO MIT ZOOM --- */
         #intro {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-dark); z-index: 9999;
             display: flex; align-items: center; justify-content: center;
-            transition: opacity 1.2s cubic-bezier(0.7, 0, 0.3, 1), visibility 1.2s;
+            overflow: hidden;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
         }
-        #intro.fade-out { opacity: 0; visibility: hidden; }
-        .intro-content { text-align: center; }
-        .intro-content img { width: 280px; filter: brightness(100%); animation: scaleUp 2s ease-out forwards; }
-        @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        /* Das Logo zoomt auf den Betrachter zu */
+        .intro-content img { 
+            width: 300px; 
+            filter: brightness(100%); 
+            animation: logoZoom 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes logoZoom {
+            0% { transform: scale(0.8); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: scale(5); opacity: 0; } /* Zoomt massiv rein und verblasst */
+        }
+
+        #intro.fade-out { 
+            opacity: 0; 
+            visibility: hidden; 
+        }
 
         /* --- NAVIGATION --- */
         header {
@@ -42,7 +57,7 @@
             position: sticky; top: 0; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); z-index: 1000;
         }
         .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
-        .logo-head img { width: 140px; filter: invert(1); } /* Macht das schwarze Logo auf weißem Grund sichtbar */
+        .logo-head img { width: 140px; filter: invert(1); }
         nav a { text-decoration: none; color: var(--text-main); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; margin-left: 40px; font-weight: 700; transition: 0.3s; }
         nav a:hover { color: var(--primary); }
 
@@ -78,7 +93,6 @@
         }
         input:focus, textarea:focus { border-bottom-color: var(--primary); outline: none; }
 
-        /* DIE 10GB UPLOAD ZONE */
         .upload-zone { 
             border: 1px dashed var(--primary); padding: 40px; text-align: center; margin-top: 20px; 
             background: rgba(197, 160, 89, 0.05); transition: 0.3s; cursor: pointer;
@@ -210,7 +224,7 @@
                 
                 <div class="upload-zone" onclick="window.open('https://www.swisstransfer.com/de-ch', '_blank')">
                     <p>+ Große Dateien senden (bis 50 GB)</p>
-                    <span style="font-size: 0.6rem; color: rgba(255,255,255,0.4); text-transform: uppercase;">Senden Sie den Link einfach in der Nachricht mit.</span>
+                    <span style="font-size: 0.6rem; color: rgba(255,255,255,0.4); text-transform: uppercase;">Link hier im Formular mitsenden.</span>
                 </div>
 
                 <button type="submit" class="btn-submit">Anfrage senden</button>
@@ -220,4 +234,25 @@
 
     <footer>
         <div class="legal-links">
-            <a onclick="openModal
+            <a onclick="openModal('agb')">AGB</a>
+            <a onclick="openModal('privacy')">Impressum & Datenschutz</a>
+        </div>
+        <p style="font-size: 0.6rem; color: #999; letter-spacing: 2px;">&copy; 2026 WOODEFFICIENT | BEDA WEBER</p>
+    </footer>
+
+    <div id="agb" class="modal"><div class="modal-body"><span class="close" onclick="closeModal('agb')">&times;</span><h2>AGB</h2><p><br>Sämtliche Leistungen erfolgen auf Basis eines individuellen Beratervertrags. Haftung für bauliche Ausführung ist ausgeschlossen.</p></div></div>
+    <div id="privacy" class="modal"><div class="modal-body"><span class="close" onclick="closeModal('privacy')">&times;</span><h2>Datenschutz</h2><p><br>Ihre Daten werden ausschliesslich zur Bearbeitung Ihrer Anfrage genutzt und niemals an Dritte weitergegeben.</p></div></div>
+
+    <script>
+        // Intro Logik: Zoom-Dauer ca 2.5s, danach Intro ausblenden
+        window.addEventListener('load', () => {
+            setTimeout(() => { 
+                document.getElementById('intro').classList.add('fade-out'); 
+            }, 2200); // Intro verschwindet kurz bevor die Zoom-Animation endet (nach 2.2 Sek)
+        });
+
+        function openModal(id) { document.getElementById(id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = 'auto'; }
+    </script>
+</body>
+</html>
