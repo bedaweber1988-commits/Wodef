@@ -4,102 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Woodefficient | Beda Weber – High-End Holzbau Expertise</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Plus+Jakarta+Sans:wght@200;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #d4af37; /* Metallic Gold */
-            --bg: #05070a;
-            --overlay: rgba(15, 23, 42, 0.8);
-            --text: #f8fafc;
-            --muted: #94a3b8;
+            --primary: #d4af37; 
+            --bg-light: #ffffff;
+            --bg-dark: #000000;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border: rgba(197, 160, 89, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
         body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-main); 
             line-height: 1.6; 
             overflow-x: hidden;
         }
 
-        /* --- INTRO ANIMATION --- */
+        /* --- FUTURISTISCHES INTRO --- */
         #intro {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999;
+            background: var(--bg-dark); z-index: 9999;
             display: flex; align-items: center; justify-content: center;
-            transition: opacity 1.5s ease, visibility 1.5s;
+            transition: opacity 1.2s cubic-bezier(0.7, 0, 0.3, 1), visibility 1.2s;
         }
         #intro.fade-out { opacity: 0; visibility: hidden; }
-        .intro-logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem; letter-spacing: 15px; color: #fff;
-            animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .intro-content { text-align: center; }
+        .intro-content img { width: 280px; filter: brightness(100%); animation: scaleUp 2s ease-out forwards; }
+        @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /* --- HEADER & NAV --- */
+        /* --- NAVIGATION --- */
         header {
-            padding: 40px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
-            position: sticky; top: 0; background: rgba(5,7,10,0.8); backdrop-filter: blur(20px); z-index: 1000;
+            padding: 20px 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky; top: 0; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); z-index: 1000;
         }
         .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 5px; text-decoration: none; color: #fff; font-weight: 600; }
-        .logo span { color: var(--primary); }
-        nav a { text-decoration: none; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-left: 40px; transition: 0.3s; }
+        .logo-head img { width: 140px; filter: invert(1); } /* Macht das schwarze Logo auf weißem Grund sichtbar */
+        nav a { text-decoration: none; color: var(--text-main); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; margin-left: 40px; font-weight: 700; transition: 0.3s; }
         nav a:hover { color: var(--primary); }
 
         /* --- HERO --- */
-        .hero { padding: 120px 40px; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 30px; }
-        .hero p { font-size: 1.2rem; color: var(--muted); max-width: 500px; margin-bottom: 40px; }
-        .hero-img-wrap { position: relative; }
-        .hero-img-wrap img { width: 100%; filter: contrast(1.1) brightness(0.8); border-radius: 2px; }
-        .experience-tag { position: absolute; bottom: -30px; left: -30px; background: var(--primary); color: #000; padding: 30px; font-weight: 800; font-size: 1.5rem; line-height: 1; }
+        .hero { padding: 120px 40px; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+        .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 8vw, 5.5rem); line-height: 1; margin-bottom: 40px; font-weight: 600; letter-spacing: -2px; }
+        .hero p { font-size: 1.3rem; color: var(--text-muted); max-width: 500px; margin-bottom: 50px; font-weight: 200; }
+        
+        .hero-img-box { position: relative; }
+        .hero-img-box img { width: 100%; filter: grayscale(1); border-radius: 2px; }
+        .gold-frame { position: absolute; top: -20px; right: -20px; width: 100%; height: 100%; border: 1px solid var(--primary); z-index: -1; }
 
         /* --- SECTIONS --- */
-        section { padding: 120px 40px; max-width: 1400px; margin: 0 auto; }
-        .section-label { color: var(--primary); text-transform: uppercase; letter-spacing: 5px; font-size: 0.75rem; margin-bottom: 20px; display: block; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 60px; }
+        section { padding: 140px 40px; max-width: 1400px; margin: 0 auto; }
+        .label { color: var(--primary); text-transform: uppercase; letter-spacing: 6px; font-size: 0.7rem; margin-bottom: 20px; display: block; font-weight: 700; }
+        .title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; margin-bottom: 50px; font-weight: 600; line-height: 1.1; }
 
         /* --- CARDS --- */
-        .card { background: rgba(255,255,255,0.02); padding: 50px; border: 1px solid rgba(255,255,255,0.05); transition: 0.5s; }
-        .card:hover { border-color: var(--primary); background: rgba(255,255,255,0.04); transform: translateY(-10px); }
-        .card h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 20px; color: var(--primary); }
-        .card ul { list-style: none; }
-        .card ul li { margin-bottom: 15px; color: var(--muted); position: relative; padding-left: 20px; }
-        .card ul li::before { content: "—"; position: absolute; left: 0; color: var(--primary); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { padding: 60px; border: 1px solid #f0f0f0; transition: 0.5s; position: relative; background: #fff; }
+        .card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .card h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 25px; }
+        .card ul { list-style: none; color: var(--text-muted); font-weight: 300; }
+        .card ul li { margin-bottom: 15px; position: relative; padding-left: 25px; }
+        .card ul li::before { content: ""; position: absolute; left: 0; top: 12px; width: 15px; height: 1px; background: var(--primary); }
 
-        /* --- STORY --- */
-        .story-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 80px; }
-        .story-text { font-size: 1.25rem; color: #cbd5e1; font-weight: 300; }
-        .story-text strong { color: #fff; font-weight: 700; }
-
-        /* --- FORM --- */
-        .contact-box { background: #0a0f18; padding: 80px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        /* --- KONTAKT & UPLOAD --- */
+        .contact-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; background: var(--bg-dark); color: #fff; padding: 100px; border-radius: 4px; }
+        .form-group { margin-bottom: 30px; }
         input, select, textarea { 
-            width: 100%; background: transparent; border: none; border-bottom: 1px solid #334155; 
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.1); 
             color: #fff; padding: 15px 0; font-family: inherit; font-size: 1rem; transition: 0.3s;
         }
         input:focus, textarea:focus { border-bottom-color: var(--primary); outline: none; }
-        .btn { background: var(--primary); color: #000; padding: 20px 60px; border: none; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
-        .btn:hover { background: #fff; }
 
-        /* --- FOOTER & MODALS --- */
-        footer { padding: 80px 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
-        .legal { margin-bottom: 30px; display: flex; justify-content: center; gap: 40px; }
-        .legal a { color: var(--muted); text-decoration: none; font-size: 0.8rem; cursor: pointer; }
-        .legal a:hover { color: var(--primary); }
+        /* DIE 10GB UPLOAD ZONE */
+        .upload-zone { 
+            border: 1px dashed var(--primary); padding: 40px; text-align: center; margin-top: 20px; 
+            background: rgba(197, 160, 89, 0.05); transition: 0.3s; cursor: pointer;
+        }
+        .upload-zone:hover { background: rgba(197, 160, 89, 0.1); }
+        .upload-zone p { font-size: 0.8rem; color: var(--primary); letter-spacing: 1px; text-transform: uppercase; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 2000; overflow-y: auto; padding: 40px; }
-        .modal-content { max-width: 800px; margin: 80px auto; background: #0a0f18; padding: 60px; border: 1px solid var(--primary); position: relative; }
-        .close { position: absolute; top: 30px; right: 30px; font-size: 2rem; color: var(--muted); cursor: pointer; }
+        .btn-submit { 
+            background: var(--primary); color: #000; padding: 25px 80px; border: none; 
+            font-weight: 800; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; 
+            width: 100%; margin-top: 40px; transition: 0.3s;
+        }
+        .btn-submit:hover { background: #fff; }
 
-        @media (max-width: 1000px) {
-            .hero, .story-layout, .form-grid { grid-template-columns: 1fr; }
-            .hero { text-align: center; }
-            .hero p { margin: 0 auto 40px auto; }
+        /* --- FOOTER --- */
+        footer { padding: 80px 40px; text-align: center; background: #fff; }
+        .legal-links { display: flex; justify-content: center; gap: 50px; margin-bottom: 30px; }
+        .legal-links a { color: var(--text-muted); text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; cursor: pointer; }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; padding: 40px; }
+        .modal-body { max-width: 800px; margin: 40px auto; background: #111; color: #fff; padding: 60px; border: 1px solid var(--primary); position: relative; }
+        .close { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: var(--primary); cursor: pointer; }
+
+        @media (max-width: 1100px) {
+            .hero, .contact-container, .grid { grid-template-columns: 1fr; }
+            .contact-container { padding: 40px; }
             nav { display: none; }
         }
     </style>
@@ -107,12 +113,14 @@
 <body>
 
     <div id="intro">
-        <div class="intro-logo">WOOD<span>EFFICIENT</span></div>
+        <div class="intro-content">
+            <img src="logo.png" alt="Woodefficient Logo">
+        </div>
     </div>
 
     <header>
         <div class="nav-container">
-            <a href="#" class="logo">WOOD<span>EFFICIENT</span></a>
+            <a href="#" class="logo-head"><img src="logo.png" alt="Woodefficient"></a>
             <nav>
                 <a href="#about">Experte</a>
                 <a href="#expertise">Leistungen</a>
@@ -123,151 +131,93 @@
 
     <section class="hero">
         <div>
-            <span class="section-label">Beda Weber</span>
-            <h1>Sicherheit an jeder Schnittstelle.</h1>
-            <p>Ich bringe 25 Jahre Bau-Erfahrung in Ihre Planung ein. Unabhängig, präzise und konsequent in der Qualitätsprüfung.</p>
-            <a href="#contact" class="btn" style="text-decoration: none; display: inline-block;">Projekt anfragen</a>
+            <span class="label">Beda Weber</span>
+            <h1>Präzision braucht Distanz.</h1>
+            <p>Unabhängige Experten-Prüfung für High-End Holzbauprojekte. Ich sichere Ihre Qualität, wo Planung auf Realität trifft.</p>
+            <a href="#contact" class="btn-submit" style="text-decoration: none; display: inline-block; width: auto;">Projekt starten</a>
         </div>
-        <div class="hero-img-wrap">
+        <div class="hero-img-box">
             <img src="Gemini_Generated_Image_b0974zb0974zb097.jpg" alt="Beda Weber">
-            <div class="experience-tag">25+ JAHRE<br><span style="font-size: 0.8rem; font-weight: 400; letter-spacing: 2px;">EXPERTISE</span></div>
+            <div class="gold-frame"></div>
         </div>
     </section>
 
     <section id="about">
-        <span class="section-label">Der Werdegang</span>
-        <div class="story-layout">
-            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3rem;">Vom Zimmermann in das Management.</h2>
-            <div class="story-text">
-                <p>Mein Fundament ist das Handwerk. Als <strong>gelernter Zimmermann</strong> kenne ich die Haptik des Holzes und die Realität auf der Baustelle. Doch mein Weg führte mich weiter: Fast 10 Jahre koordinierte ich <strong>internationale Grossbauprojekte</strong>, vom Monteur bis zum leitenden Projektmanager.</p><br>
-                <p>Diese Reise gipfelte in der <strong>Leitung einer Grossbauabteilung</strong> in einem Schweizer Konzern. Heute nutze ich dieses Wissen als Ihr unabhängiger Experte. Ich biete keine AVOR oder Planung an – ich biete die <strong>unabhängige Prüfung</strong> derselben. Ich spreche die Sprache der Bauherren, Architekten und Handwerker.</p>
+        <span class="label">Werdegang</span>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px;">
+            <h2 class="title">Vom Zimmermann zur Konzernleitung.</h2>
+            <div style="font-size: 1.1rem; font-weight: 300; color: var(--text-muted);">
+                <p>25 Jahre Erfahrung fliessen in jedes Review ein. Als gelernter Zimmermann kenne ich den Kern, als ehemaliger Abteilungsleiter eines Grossunternehmens verstehe ich die strategische Komplexität.</p><br>
+                <p>Ich bin kein Planer. Ich bin die <strong>Instanz</strong>, die Ihre Planung prüft, bevor teure Fehler auf der Baustelle entstehen.</p>
             </div>
         </div>
     </section>
 
     <section id="expertise">
-        <span class="section-label">Leistungsbereiche</span>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3rem; text-align: center;">Wer profitiert?</h2>
+        <span class="label">Expertise</span>
         <div class="grid">
             <div class="card">
                 <h3>Architekten</h3>
                 <ul>
-                    <li>Machbarkeits-Checks im Entwurf</li>
-                    <li>Schnittstellen-Koordination</li>
-                    <li>LV-Unterstützung</li>
+                    <li>Machbarkeits-Check</li>
+                    <li>Schnittstellen-Details</li>
+                    <li>Ausschreibungshilfe</li>
                 </ul>
             </div>
             <div class="card">
-                <h3>GUs & TUs</h3>
+                <h3>GU / TU</h3>
                 <ul>
-                    <li>Controlling der Werkstattplanung</li>
-                    <li>Risikoanalyse vor Vergabe</li>
-                    <li>Überwachung der Montage</li>
+                    <li>Planungs-Controlling</li>
+                    <li>Risiko-Expertisen</li>
+                    <li>Montage-Audits</li>
                 </ul>
             </div>
             <div class="card">
-                <h3>Investoren</h3>
+                <h3>Bauherren</h3>
                 <ul>
-                    <li>Unabhängige QS auf Platz</li>
-                    <li>Zweitmeinung zu Kosten</li>
-                    <li>Expertisen bei Mängeln</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Holzbauer</h3>
-                <ul>
-                    <li>Prozess-Audits (Fehlerminimierung)</li>
-                    <li>Fachexpertise bei Grenzfragen</li>
-                    <li>Neutrale Konzeptprüfung</li>
+                    <li>Qualitätssicherung</li>
+                    <li>Zweitmeinungen</li>
+                    <li>Kosten-Reviews</li>
                 </ul>
             </div>
         </div>
     </section>
 
     <section id="contact">
-        <div class="contact-box">
-            <span class="section-label">Anfrage</span>
-            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3rem; margin-bottom: 40px;">Lassen Sie uns Klarheit schaffen.</h2>
+        <div class="contact-container">
+            <div>
+                <span class="label" style="color: var(--primary);">Anfrage</span>
+                <h2 class="title" style="color: #fff; font-size: 3rem;">Bereit für das Review?</h2>
+                <p style="font-weight: 200; opacity: 0.7;">Senden Sie mir Ihre Projektdaten. Für Pläne bis 10 GB nutzen Sie bitte die Secure Drop Zone.</p>
+            </div>
+            
             <form action="https://formspree.io/f/info@woodefficient.ch" method="POST">
-                <div class="form-grid">
-                    <input type="text" name="Name" placeholder="Name" required>
-                    <input type="email" name="Email" placeholder="E-Mail" required>
+                <div class="form-group">
+                    <input type="text" name="Name" placeholder="Vollständiger Name" required>
                 </div>
-                <div class="form-grid">
-                    <select name="Rolle">
-                        <option>Architekt / Ingenieur</option>
-                        <option>GU / TU</option>
-                        <option>Investor / Bauherr</option>
-                        <option>Holzbau-Unternehmen</option>
-                    </select>
-                    <select name="Service">
+                <div class="form-group">
+                    <input type="email" name="Email" placeholder="E-Mail Adresse" required>
+                </div>
+                <div class="form-group">
+                    <select name="Anliegen">
+                        <option value="" disabled selected>Mein Anliegen...</option>
                         <option>Schnittstellen-Check</option>
                         <option>Qualitätssicherung</option>
-                        <option>Fachexpertise</option>
+                        <option>Expertise / Zweitmeinung</option>
                     </select>
                 </div>
-                <textarea name="Message" rows="5" placeholder="Projektbeschreibung..."></textarea>
-                <div style="margin-top: 40px;">
-                    <button type="submit" class="btn">Absenden</button>
+                <textarea name="Nachricht" rows="4" placeholder="Kurze Projektbeschreibung..."></textarea>
+                
+                <div class="upload-zone" onclick="window.open('https://www.swisstransfer.com/de-ch', '_blank')">
+                    <p>+ Große Dateien senden (bis 50 GB)</p>
+                    <span style="font-size: 0.6rem; color: rgba(255,255,255,0.4); text-transform: uppercase;">Senden Sie den Link einfach in der Nachricht mit.</span>
                 </div>
+
+                <button type="submit" class="btn-submit">Anfrage senden</button>
             </form>
         </div>
     </section>
 
     <footer>
-        <div class="legal">
-            <a onclick="openModal('agb')">AGB</a>
-            <a onclick="openModal('privacy')">Rechtliches & Copyright</a>
-        </div>
-        <p style="color: var(--muted); font-size: 0.7rem; letter-spacing: 2px;">&copy; 2026 BEDA WEBER | WOODEFFICIENT.CH</p>
-    </footer>
-
-    <div id="agb" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('agb')">&times;</span>
-            <h2 style="font-family: 'Cormorant Garamond', serif; margin-bottom: 30px;">Allgemeine Geschäftsbedingungen</h2>
-            <div style="color: var(--muted); line-height: 1.8;">
-                <p><strong>1. Geltung:</strong> Diese AGB gelten für alle Dienstleistungen von Woodefficient (Beda Weber).</p>
-                <p><strong>2. Unabhängigkeit:</strong> Ich erbringe reine Beratungs- und Prüfungsleistungen. Die Haftung für die bauliche Ausführung verbleibt beim jeweiligen Werkunternehmer. AVOR und statische Berechnungen sind nicht Teil des Angebots.</p>
-                <p><strong>3. Honorar:</strong> Soweit nicht anders vereinbart, gilt ein Stundensatz von 140 CHF/h. Spesen werden separat nach Aufwand verrechnet.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="privacy" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('privacy')">&times;</span>
-            <h2 style="font-family: 'Cormorant Garamond', serif; margin-bottom: 30px;">Copyright & Rechtliches</h2>
-            <div style="color: var(--muted); line-height: 1.8;">
-                <p>Das Logo, die Texte und das Design dieser Webseite sind geistiges Eigentum von Beda Weber.</p>
-                <p>Anfragen über das Kontaktformular werden streng vertraulich behandelt und nur zur Bearbeitung Ihres Anliegens gespeichert.</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Intro Animation
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('intro').classList.add('fade-out');
-            }, 1500);
-        });
-
-        // Modals
-        function openModal(id) {
-            document.getElementById(id).style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        window.onclick = function(event) {
-            if (event.target.className === 'modal') {
-                event.target.style.display = "none";
-                document.body.style.overflow = 'auto';
-            }
-        }
-    </script>
-</body>
-</html>
+        <div class="legal-links">
+            <a onclick="openModal
